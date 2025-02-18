@@ -70,15 +70,14 @@
             let videoId = extractVideoId(url);
             if (!videoId) return;
 
-            // Pridanie videa do Firestore
-            addDoc(collection(db, "videos"), {
-                videoId: videoId
-            }).then(() => {
-                displayVideo(videoId);
-                document.getElementById('youtubeUrl').value = ''; // Vyprázdni vstupné pole
-            }).catch((error) => {
-                alert("Chyba pri pridávaní videa: " + error);
-            });
+            addDoc(collection(db, "videos"), { videoId: videoId })
+                .then(() => {
+                    displayVideo(videoId);
+                    document.getElementById('youtubeUrl').value = '';
+                })
+                .catch((error) => {
+                    alert("Chyba pri pridávaní videa: " + error);
+                });
         }
 
         // Funkcia na zobrazenie videa na stránke
@@ -118,7 +117,6 @@
             element.remove();
         }
 
-        // Načítanie videí z Firestore po načítaní stránky
         document.addEventListener("DOMContentLoaded", () => {
             getDocs(collection(db, "videos")).then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
